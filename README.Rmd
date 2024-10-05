@@ -17,3 +17,29 @@ Include your answers in this document (Rmd file). Make sure that it knits proper
 
 All submissions to the github repo will be automatically uploaded for grading once the due date is passed.
 Submit a link to your repository on Canvas (only one submission per team) to signal to the instructors that you are done with your submission.
+
+'''{r}
+library(classdata)
+data(ames)
+summary(ames)
+#head(ames)
+typeof(ames$'Style')
+'''
+
+1. Inspecting the dataset
+Parcel ID (Character):
+Address (Character):
+Style (Character):
+Occupancy (Character):
+Sale Date (Date):
+Sale Price (Numeric):
+Multi Sale (Character):
+YearBuilt (Numeric):
+Acres (Double):
+TotalLivingArea (Double):
+Bedrooms (Double):
+FinishedBsmtArea (Double):
+LotArea (Double):
+AC (Character):
+FirePlace (Character):
+Neighborhood (Integer):
