@@ -22,24 +22,43 @@ Submit a link to your repository on Canvas (only one submission per team) to sig
 library(classdata)
 data(ames)
 summary(ames)
-#head(ames)
-typeof(ames$'Style')
+head(ames$'Parcel ID')
+typeof(ames$'Parcel ID')
+str(ames)
+head(ames$'Sale Price')
+range(ames$'Sale Price', na.rm=TRUE)
 '''
 
 1. Inspecting the dataset
-Parcel ID (Character):
-Address (Character):
-Style (Character):
-Occupancy (Character):
-Sale Date (Date):
-Sale Price (Numeric):
+
+Parcel ID (Character): String containing a set of numbers to describe a unique ID for each parcel. The string can be a 10 digit ID value beginning with a 0.
+
+Address (Character): String containing the address to which the parcel is addressed to. All address strings are in the form of "Number Street, Ames". They do not have a definite data range as they're strings, but they'll all be within Ames.
+
+Style (Factor): This is a factor variable with 12 levels of strings which describes a different style layout of the house. It's range is between the 12 possible levels.
+
+Occupancy (Factor): This is a factor variable with 4 different levels of strings which describes the amount of people that can live in a home. The ranges are between Condominium Single-Family / Owner Occupied, Townhouse, Two-Family Conversion Two-Family Duplex
+
+Sale Date (Date): This date variable describes the day the house was sold. The range of this variable is between 2017-07-03 and 2022-08-31
+
+Sale Price (Numeric): This variable describes the amount the house was sold in USD. The range of this variable is between 0 and 20,500,000.
+
 Multi Sale (Character):
+
 YearBuilt (Numeric):
-Acres (Double):
-TotalLivingArea (Double):
-Bedrooms (Double):
-FinishedBsmtArea (Double):
-LotArea (Double):
+
+Acres (Numeric):
+
+TotalLivingArea (Numeric):
+
+Bedrooms (Numeric):
+
+FinishedBsmtArea (Numeric):
+
+LotArea (Numeric):
+
 AC (Character):
+
 FirePlace (Character):
-Neighborhood (Integer):
+
+Neighborhood (Factor):
