@@ -30,7 +30,7 @@ range(ames$'Sale Price', na.rm=TRUE)
 '''
 
 1. Inspecting the dataset
-
+Manas:
 Parcel ID (Character): String containing a set of numbers to describe a unique ID for each parcel. The string can be a 10 digit ID value beginning with a 0.
 
 Address (Character): String containing the address to which the parcel is addressed to. All address strings are in the form of "Number Street, Ames". They do not have a definite data range as they're strings, but they'll all be within Ames.
@@ -62,3 +62,23 @@ AC (Character):
 FirePlace (Character):
 
 Neighborhood (Factor):
+
+2. Our main variable of special interest in this dataset is the sale price of the homes
+
+3. 
+'''{r}
+library(ggplot2)
+ggplot(data=ames, aes(x=`Sale Price`)) + geom_histogram(binwidth=8000)
+
+median(ames$`Sale Price`)
+'''
+Since our main variable is numeric, we chose a histogram. Taking a dive into the chart, we can see that the median price of a home is at $170,900. FINISH
+
+
+4. 
+Manas:
+'''{r}
+library(dplyr)
+new_data <- filter(ames, `YearBuilt` > 1500, `Sale Price` > 0, !is.na(`YearBuilt`), !is.na(`Sale Price`))
+ggplot(data=new_data, aes(x=`YearBuilt`, y=`Sale Price`)) + geom_point()
+'''
