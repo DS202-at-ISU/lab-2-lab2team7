@@ -20,6 +20,9 @@ Submit a link to your repository on Canvas (only one submission per team) to sig
 
 '''{r}
 library(classdata)
+library(dplyr)
+library(ggplot2)
+
 data(ames)
 summary(ames)
 head(ames$'Parcel ID')
@@ -67,18 +70,19 @@ Neighborhood (Factor):
 
 3. 
 '''{r}
-library(ggplot2)
+new_data <- filter(ames, `Sale Price` < 10000000, `Sale Price` > 0)
 ggplot(data=ames, aes(x=`Sale Price`)) + geom_histogram(binwidth=8000)
 
-median(ames$`Sale Price`)
+mean(new_data$`Sale Price`)
 '''
-Since our main variable is numeric, we chose a histogram. Taking a dive into the chart, we can see that the median price of a home is at $170,900. FINISH
+Since our main variable is numeric, we chose a histogram. Taking a dive into the chart, we can see that the mean price of a home is at \$1,017,479. Majority of the homes are less than \$1,000,000, the mean is skewed due to the few houses which are outliers that are extremely expensive. Taking the outliers > \$1,000,000 out of the equation, the average home is \$241,960.
 
 
 4. 
 Manas:
 '''{r}
-library(dplyr)
-new_data <- filter(ames, `YearBuilt` > 1500, `Sale Price` > 0, !is.na(`YearBuilt`), !is.na(`Sale Price`))
+new_data <- filter(ames, `YearBuilt` > 1500, `Sale Price` > 0, !is.na(`YearBuilt`), !is.na(`Sale Price`), `Sale Price` < 1000000)
 ggplot(data=new_data, aes(x=`YearBuilt`, y=`Sale Price`)) + geom_point()
+range(ames$YearBuilt)
 '''
+I picked the YearBuilt variable to see if there's a realationship with the main variable Sale Price. overall range of YearBuilt is 0 to 2022. This data needed some filtering, so the real min data shows the first houses in the dataset are from 1880. I also removed houses that are well over \$1M, as they're houses that which are outliers to the dataset. The mean shows us that the average house was built in 1976. Using a scatterplot, we can see a positive correlation between the YearBuilt and the sales price, as the average house price has continued to rise as the years go on.
