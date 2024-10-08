@@ -152,25 +152,52 @@ sold. The range of this variable is between 2017-07-03 and 2022-08-31
 Sale Price (Numeric): This variable describes the amount the house was
 sold in USD. The range of this variable is between 0 and 20,500,000.
 
-Multi Sale (Character): Indicates multiple sales for the parcel.
+Multi Sale (Character): Indicates whether the parcel has multiple sales
+associated with it. This variable contains “Yes” or “No” values, though
+more detailed levels would need further investigation.
 
-Year Built (Numeric): Year the property was built.
+Year Built (Numeric): Range: From 0 (which seems like an error or
+placeholder) to 2022. Filter out invalid years if needed. Description:
+The range of years when properties were built spans from 1880 (after
+filtering invalid data) to 2022.
 
-Acres (Numeric): Lot size in acres.
+Acres (Numeric): Range: From 0.0000 to 12.0120 acres. Description: Lot
+sizes range from small parcels (0 acres) to large estates (12 acres).
 
-Total Living Area (Numeric): Total living space in square feet.
+Total Living Area (Numeric): Range: From 0 (possible data issue or very
+small homes) to 6007 square feet. Description: The living area ranges
+from 0 to 6007 square feet, with most properties falling between 1095
+and 1792 square feet.
 
-Bedrooms (Numeric): Number of bedrooms.
+Bedrooms (Numeric): Range: From 0 (no bedroom) to 10 bedrooms.
+Description: The number of bedrooms ranges from 0 (indicating possibly
+non-residential or studio properties) to 10, with most homes having 3 to
+4 bedrooms.
 
-Finished Basement Area (Numeric): Finished area in the basement.
+Finished Basement Area (Numeric): Range: From 10 square feet (indicating
+very little finished area) to 6496 square feet. Description: Finished
+basement areas range from 10 to 6496 square feet, with most properties
+having between 474 and 1011 square feet.
 
-Lot Area (Numeric): Lot area in square feet.
+Lot Area (Numeric): Range: From 0 square feet (possibly indicating
+missing data) to 523,228 square feet. Description: Lot sizes vary
+significantly, from 0 to 523,228 square feet, with typical lot sizes
+ranging from 6553 to 12,088 square feet.
 
-AC (Character): Air conditioning status.
+AC (Character): Description: This variable likely indicates whether air
+conditioning is present or absent (e.g., “Yes”/“No” or other similar
+categories), but the summary table does not show specific values. You’ll
+need to check the unique values for further clarification.
 
-FirePlace (Character): Fireplace information.
+FirePlace (Character): Description: Indicates the presence or absence of
+a fireplace. Similar to the “AC” variable, the summary does not provide
+specific values, but you could describe it based on whether fireplaces
+are present.
 
-Neighborhood (Factor): Neighborhood in Ames.
+Neighborhood (Factor): Description: A factor variable with multiple
+levels indicating different neighborhoods in Ames. The summary shows
+some of the largest neighborhoods like North Ames (854 observations) and
+College Creek (652 observations).
 
 2.  Our main variable of special interest in this dataset is the sale
     price of the homes
@@ -250,3 +277,57 @@ shows that as living area increases, the sale price generally rises.
 Observations: Larger living spaces contribute significantly to higher
 property values, confirming that property size is a strong indicator of
 sale price.
+
+Shivansh:
+
+``` r
+acres_bedrooms_data <- filter(ames, Acres > 0, Bedrooms > 0)
+
+ggplot(data = acres_bedrooms_data, aes(x = Acres, y = Bedrooms)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "blue")
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+``` r
+  labs(title = "Relationship between Acres and Bedrooms",
+       x = "Acres",
+       y = "Number of Bedrooms")
+```
+
+    ## $x
+    ## [1] "Acres"
+    ## 
+    ## $y
+    ## [1] "Number of Bedrooms"
+    ## 
+    ## $title
+    ## [1] "Relationship between Acres and Bedrooms"
+    ## 
+    ## attr(,"class")
+    ## [1] "labels"
+
+``` r
+range(acres_bedrooms_data$Acres)
+```
+
+    ## [1] 0.001 4.650
+
+``` r
+range(acres_bedrooms_data$Bedrooms)
+```
+
+    ## [1]  1 10
+
+Analysis:
+
+“Acres” and “Bedrooms” show a positive correlation, but the relationship
+is not extremely strong due to the wide variance at lower acre sizes.
+While larger lots generally have more bedrooms, the size of the lot is
+not the sole determinant of the number of bedrooms, especially for
+properties with less than 1 acre. The property’s style (e.g.,
+single-family home versus multi-family home) or the neighborhood, might
+influence the number of bedrooms independent of acreage.
