@@ -18,7 +18,7 @@ Include your answers in this document (Rmd file). Make sure that it knits proper
 All submissions to the github repo will be automatically uploaded for grading once the due date is passed.
 Submit a link to your repository on Canvas (only one submission per team) to signal to the instructors that you are done with your submission.
 
-'''{r}
+```{r}
 library(classdata)
 library(dplyr)
 library(ggplot2)
@@ -30,7 +30,7 @@ typeof(ames$'Parcel ID')
 str(ames)
 head(ames$'Sale Price')
 range(ames$'Sale Price', na.rm=TRUE)
-'''
+```
 
 1. Inspecting the dataset
 Manas:
@@ -46,43 +46,60 @@ Sale Date (Date): This date variable describes the day the house was sold. The r
 
 Sale Price (Numeric): This variable describes the amount the house was sold in USD. The range of this variable is between 0 and 20,500,000.
 
-Multi Sale (Character):
 
-YearBuilt (Numeric):
+Multi Sale (Character): Indicates multiple sales for the parcel.
 
-Acres (Numeric):
+Year Built (Numeric): Year the property was built.
 
-TotalLivingArea (Numeric):
+Acres (Numeric): Lot size in acres.
 
-Bedrooms (Numeric):
+Total Living Area (Numeric): Total living space in square feet.
 
-FinishedBsmtArea (Numeric):
+Bedrooms (Numeric): Number of bedrooms.
 
-LotArea (Numeric):
+Finished Basement Area (Numeric): Finished area in the basement.
 
-AC (Character):
+Lot Area (Numeric): Lot area in square feet.
 
-FirePlace (Character):
+AC (Character): Air conditioning status.
 
-Neighborhood (Factor):
+FirePlace (Character): Fireplace information.
+
+Neighborhood (Factor): Neighborhood in Ames.
 
 2. Our main variable of special interest in this dataset is the sale price of the homes
 
+
 3. 
-'''{r}
+```{r}
 new_data <- filter(ames, `Sale Price` < 10000000, `Sale Price` > 0)
 ggplot(data=ames, aes(x=`Sale Price`)) + geom_histogram(binwidth=8000)
 
 mean(new_data$`Sale Price`)
-'''
+```
 Since our main variable is numeric, we chose a histogram. Taking a dive into the chart, we can see that the mean price of a home is at \$1,017,479. Majority of the homes are less than \$1,000,000, the mean is skewed due to the few houses which are outliers that are extremely expensive. Taking the outliers > \$1,000,000 out of the equation, the average home is \$241,960.
 
 
 4. 
 Manas:
-'''{r}
+```{r}
 new_data <- filter(ames, `YearBuilt` > 1500, `Sale Price` > 0, !is.na(`YearBuilt`), !is.na(`Sale Price`), `Sale Price` < 1000000)
 ggplot(data=new_data, aes(x=`YearBuilt`, y=`Sale Price`)) + geom_point()
 range(ames$YearBuilt)
-'''
+```
 I picked the YearBuilt variable to see if there's a realationship with the main variable Sale Price. overall range of YearBuilt is 0 to 2022. This data needed some filtering, so the real min data shows the first houses in the dataset are from 1880. I also removed houses that are well over \$1M, as they're houses that which are outliers to the dataset. The mean shows us that the average house was built in 1976. Using a scatterplot, we can see a positive correlation between the YearBuilt and the sales price, as the average house price has continued to rise as the years go on.
+
+Muhammad:
+```{r}
+living_area_data <- filter(ames, `TotalLivingArea (sf)` > 0, `Sale Price` > 0, `Sale Price` < 1000000)
+ggplot(data = living_area_data, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) + geom_point() + geom_smooth(method = "lm", col = "blue")
+range(living_area_data$`TotalLivingArea (sf)`)
+
+```
+Analysis:
+
+Total Living Area Range: From 334 to 5642 square feet.
+
+Correlation: A positive correlation is visible, as larger living areas tend to have higher sale prices. The scatter plot with a trend line shows that as living area increases, the sale price generally rises.
+
+Observations: Larger living spaces contribute significantly to higher property values, confirming that property size is a strong indicator of sale price.
